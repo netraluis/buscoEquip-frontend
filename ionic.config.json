@@ -1,0 +1,7 @@
+{
+  "name": "buscoEquip-frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
