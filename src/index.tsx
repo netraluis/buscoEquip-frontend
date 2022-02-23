@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import { GeneralContext } from './context/general.context';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <GeneralContext>
+      <App />
+    </GeneralContext>
   </React.StrictMode>,
   document.getElementById('root')
 );
