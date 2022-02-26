@@ -3,7 +3,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSegment, IonSe
 import { UserClub, UserClubWorker, UserCommon, UserDoc, UserPlayer } from '../../types/user.types';
 import { withContext } from '../../context/general.context';
 
-interface signupProps {
+interface loginProps {
   login(arg: UserDoc): React.SetStateAction<{
     isLoggedIn: boolean;
     isLoading: boolean;
@@ -12,8 +12,7 @@ interface signupProps {
   }>
 }
 
-const Signup: React.FC<signupProps> = (props): JSX.Element => {
-  const [type, setType] = useState<undefined | string>('player')
+const Login: React.FC<loginProps> = (props): JSX.Element => {
   const [user, setUser] = useState<Partial<UserCommon>>({
   })
 
@@ -25,18 +24,6 @@ const Signup: React.FC<signupProps> = (props): JSX.Element => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonSegment onIonChange={e => setType(e.detail.value)}>
-          <IonSegmentButton value="clubWorker">
-            <IonLabel>Entrenador</IonLabel>
-          </IonSegmentButton>
-          <IonSegmentButton value="player">
-            <IonLabel>Jugador</IonLabel>
-          </IonSegmentButton>
-          <IonSegmentButton value="club">
-            <IonLabel>club</IonLabel>
-          </IonSegmentButton>
-        </IonSegment>
-
         <IonItem>
           <IonLabel position="floating">Email</IonLabel>
           <IonInput value={user.email ? user.email : ''} onIonChange={e => setUser({ ...user, email: e.detail.value ? e.detail.value : undefined })}></IonInput>
@@ -55,6 +42,7 @@ const Signup: React.FC<signupProps> = (props): JSX.Element => {
           }
           const data: UserDoc = user
           try {
+            console.log({data})
             const res = props.login(data);
 
           } catch (e) {
@@ -66,4 +54,4 @@ const Signup: React.FC<signupProps> = (props): JSX.Element => {
   );
 };
 
-export default withContext(Signup);
+export default withContext(Login);

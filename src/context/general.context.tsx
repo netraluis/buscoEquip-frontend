@@ -57,6 +57,7 @@ const GeneralContext: any = (props: any) => {
           })
         )
         .catch((err) => {
+          console.log({err})
           return setGlobalContext({
             isLoggedIn: false,
             user: null,
