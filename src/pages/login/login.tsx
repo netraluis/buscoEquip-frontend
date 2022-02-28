@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSegment, IonSegmentButton, IonLabel, IonInput, IonItem, IonSelectOption, IonSelect, IonButton } from '@ionic/react';
-import { UserClub, UserClubWorker, UserCommon, UserDoc, UserPlayer } from '../../types/user.types';
+import {  UserCommon, UserDoc } from '../../types/user.types';
 import { withContext } from '../../context/general.context';
 
 interface loginProps {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import authService from "../services/auth.services";
+import matchService from "../services/match.services";
 
 interface globalContext {
   isLoggedIn: boolean;
@@ -8,7 +9,7 @@ interface globalContext {
   errorMessage: null | string;
 }
 
-let ConsumerWrapper:  React.Consumer<{
+let ConsumerWrapper: React.Consumer<{
   isLoggedIn: boolean;
   isLoading: boolean;
   user: null;
@@ -17,6 +18,7 @@ let ConsumerWrapper:  React.Consumer<{
   login: (data: any) => Promise<void>;
   logout: () => Promise<void>;
   isLogged: () => Promise<void>;
+  createMatch: (data: any) => Promise<void>
 }>;
 
 
@@ -57,7 +59,7 @@ const GeneralContext: any = (props: any) => {
           })
         )
         .catch((err) => {
-          console.log({err})
+          console.log({ err })
           return setGlobalContext({
             isLoggedIn: false,
             user: null,
@@ -66,7 +68,7 @@ const GeneralContext: any = (props: any) => {
           });
         });
     },
-  
+
     logout: async () => {
       authService
         .logout()
@@ -81,8 +83,7 @@ const GeneralContext: any = (props: any) => {
           setGlobalContext({
             isLoggedIn: true,
             isLoading: false,
-            // user: result.data,
-            user: null,
+            user: result.data,
             errorMessage: null,
           });
         }
@@ -94,9 +95,46 @@ const GeneralContext: any = (props: any) => {
           errorMessage: null,
         });
       }
+    },
+
+    createMatch: async (data: any) => {
+      try {
+        await matchService.create(data);
+      } catch (err) {
+        setGlobalContext({
+          ...globalContext,
+          isLoading: false,
+          errorMessage: null,
+        });
+      }
+    },
+
+    decideMatch: async (data: any) => {
+      try {
+        await matchService.decide(data);
+      } catch (err) {
+        setGlobalContext({
+          ...globalContext,
+          isLoading: false,
+          errorMessage: null,
+        });
+      }
+    },
+
+    getMatches: async () => {
+      try {
+        await matchService.get();
+      } catch (err) {
+        setGlobalContext({
+          ...globalContext,
+          isLoading: false,
+          errorMessage: null,
+        });
+      }
     }
+
   }
-  
+
   const { Consumer, Provider } = React.createContext({
     ...defaultFunctions,
     isLoggedIn: false,
@@ -106,7 +144,7 @@ const GeneralContext: any = (props: any) => {
   });
 
   ConsumerWrapper = Consumer;
-  
+
   const [globalContext, setGlobalContext] = useState({
     isLoggedIn: false,
     isLoading: true,

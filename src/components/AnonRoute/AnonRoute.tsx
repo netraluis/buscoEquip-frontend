@@ -20,7 +20,7 @@ const AnonRoute = (routeProps: any) => {
       exact={exact}
       path={path}
       render={function (props) {
-        if (isLoggedIn) return <Redirect to="/login" />;
+        if (isLoggedIn) return <Redirect to="/create" />;
         else if (! isLoggedIn) return <ComponentToShow {...props} />;
       }}
     />
